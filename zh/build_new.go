@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
-	"bufio"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -45,9 +45,9 @@ func (self *Visitor) md2html(arg map[string]string) error {
 		input := string(input_byte)
 		input = regexp.MustCompile(`\[(.*?)\]\(<?(.*?)\.md>?\)`).ReplaceAllString(input, "[$1](<$2.html>)")
 
-		if f.Name() == "README.md" {
-			input = regexp.MustCompile(`https:\/\/github\.com\/astaxie\/build-web-application-with-golang\/blob\/master\/`).ReplaceAllString(input, "")
-		}
+		//if f.Name() == "README.md" {
+		//	input = regexp.MustCompile(`https:\/\/github\.com\/astaxie\/build-web-application-with-golang\/blob\/master\/`).ReplaceAllString(input, "")
+		//}
 
 		// 以#开头的行，在#后增加空格
 		// 以#开头的行, 删除多余的空格
@@ -79,8 +79,8 @@ func (self *Visitor) md2html(arg map[string]string) error {
 		req.Header.Set("Authorization", "token "+token)
 		//
 		resp, err := client.Do(req)
-		if err!=nil {
-			fmt.Println("err:",err)
+		if err != nil {
+			fmt.Println("err:", err)
 		}
 
 		defer resp.Body.Close()
